@@ -1,0 +1,12 @@
+20. Como seria algun ejemplo?
+21. ver error con los que lo contienen
+22. Consultar acerca de la union
+23. Si aparece S sola es valida?
+28. Como hago para que no tome el 0 solo?
+29. Preguntar
+30. Preguntar
+31. No se puede porque no es lenguaje regular?
+33. No se puede porque no es lenguaje regular
+34. No se puede porque no es lenguaje regular
+37. No se puede porque no es lenguaje regular
+

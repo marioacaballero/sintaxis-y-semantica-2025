@@ -1,0 +1,7 @@
+program pepe;
+begin
+  suma:= 3 + 1;
+  mult:= 3*2;
+  equacion := (3*5) - (4/2) + (3.5 + 1);
+  
+end
