@@ -9,4 +9,3 @@
 33. No se puede porque no es lenguaje regular
 34. No se puede porque no es lenguaje regular
 37. No se puede porque no es lenguaje regular
-
