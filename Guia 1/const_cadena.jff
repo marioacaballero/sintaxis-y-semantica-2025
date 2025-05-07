@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>
+	<type>fa</type>
+	<automaton>
+		<!--The list of states.-->
+		<state id="0" name="0">
+			<x>205.0</x>
+			<y>253.0</y>
+			<initial/>
+		</state>
+		<state id="1" name="1">
+			<x>437.0</x>
+			<y>146.0</y>
+		</state>
+		<state id="2" name="2">
+			<x>641.0</x>
+			<y>265.0</y>
+			<final/>
+		</state>
+		<state id="3" name="3">
+			<x>435.0</x>
+			<y>359.0</y>
+		</state>
+		<!--The list of transitions.-->
+		<transition>
+			<from>0</from>
+			<to>1</to>
+			<read>'</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>3</to>
+			<read>D</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>1</to>
+			<read>D</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>3</to>
+			<read>O</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>3</to>
+			<read>'</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>3</to>
+			<read>L</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>3</to>
+			<read>L</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>1</to>
+			<read>L</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>3</to>
+			<read>'</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>3</to>
+			<read>O</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>1</to>
+			<read>O</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>3</to>
+			<read>D</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>3</to>
+			<read>D</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>3</to>
+			<read>O</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>2</to>
+			<read>'</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>3</to>
+			<read>L</read>
+		</transition>
+		<note>
+			<text>L: letra
+D: digito
+': comilla simple
+O: otro</text>
+			<x>902.0</x>
+			<y>102.0</y>
+		</note>
+	</automaton>
+</structure>
