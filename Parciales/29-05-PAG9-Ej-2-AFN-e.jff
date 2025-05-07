@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>
+	<type>fa</type>
+	<automaton>
+		<!--The list of states.-->
+		<state id="0" name="2">
+			<x>363.0</x>
+			<y>103.0</y>
+		</state>
+		<state id="1" name="3">
+			<x>497.0</x>
+			<y>100.0</y>
+		</state>
+		<state id="2" name="1">
+			<x>294.0</x>
+			<y>161.0</y>
+		</state>
+		<state id="3" name="4">
+			<x>564.0</x>
+			<y>160.0</y>
+		</state>
+		<state id="4" name="5">
+			<x>88.0</x>
+			<y>357.0</y>
+		</state>
+		<state id="5" name="6">
+			<x>140.0</x>
+			<y>274.0</y>
+		</state>
+		<state id="6" name="7">
+			<x>269.0</x>
+			<y>279.0</y>
+		</state>
+		<state id="7" name="8">
+			<x>304.0</x>
+			<y>358.0</y>
+		</state>
+		<state id="8" name="9">
+			<x>384.0</x>
+			<y>358.0</y>
+		</state>
+		<state id="9" name="11">
+			<x>535.0</x>
+			<y>304.0</y>
+		</state>
+		<state id="10" name="12">
+			<x>622.0</x>
+			<y>261.0</y>
+		</state>
+		<state id="11" name="13">
+			<x>697.0</x>
+			<y>308.0</y>
+		</state>
+		<state id="12" name="10">
+			<x>468.0</x>
+			<y>358.0</y>
+		</state>
+		<state id="13" name="14">
+			<x>782.0</x>
+			<y>362.0</y>
+		</state>
+		<state id="14" name="0">
+			<x>34.0</x>
+			<y>243.0</y>
+			<initial/>
+		</state>
+		<state id="15" name="15">
+			<x>841.0</x>
+			<y>235.0</y>
+		</state>
+		<state id="16" name="16">
+			<x>927.0</x>
+			<y>236.0</y>
+		</state>
+		<state id="17" name="22">
+			<x>1230.0</x>
+			<y>233.0</y>
+			<final/>
+		</state>
+		<state id="18" name="19">
+			<x>992.0</x>
+			<y>365.0</y>
+		</state>
+		<state id="19" name="20">
+			<x>1089.0</x>
+			<y>365.0</y>
+		</state>
+		<state id="20" name="21">
+			<x>1170.0</x>
+			<y>367.0</y>
+		</state>
+		<state id="21" name="17">
+			<x>1015.0</x>
+			<y>129.0</y>
+		</state>
+		<state id="22" name="18">
+			<x>1118.0</x>
+			<y>128.0</y>
+		</state>
+		<!--The list of transitions.-->
+		<transition>
+			<from>4</from>
+			<to>5</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>0</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>15</from>
+			<to>16</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>6</from>
+			<to>7</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>19</from>
+			<to>20</to>
+			<read>a</read>
+		</transition>
+		<transition>
+			<from>9</from>
+			<to>10</to>
+			<read>b</read>
+		</transition>
+		<transition>
+			<from>3</from>
+			<to>15</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>10</from>
+			<to>11</to>
+			<read>a</read>
+		</transition>
+		<transition>
+			<from>22</from>
+			<to>17</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>16</from>
+			<to>18</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>14</from>
+			<to>2</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>16</from>
+			<to>21</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>0</from>
+			<to>1</to>
+			<read>b</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>0</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>5</from>
+			<to>6</to>
+			<read>b</read>
+		</transition>
+		<transition>
+			<from>8</from>
+			<to>12</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>20</from>
+			<to>17</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>4</from>
+			<to>7</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>11</from>
+			<to>9</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>13</from>
+			<to>15</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>1</from>
+			<to>3</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>6</from>
+			<to>5</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>12</from>
+			<to>9</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>14</from>
+			<to>4</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>18</from>
+			<to>19</to>
+			<read>a</read>
+		</transition>
+		<transition>
+			<from>7</from>
+			<to>8</to>
+			<read>a</read>
+		</transition>
+		<transition>
+			<from>12</from>
+			<to>13</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>11</from>
+			<to>13</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>2</from>
+			<to>3</to>
+			<read>e</read>
+		</transition>
+		<transition>
+			<from>21</from>
+			<to>22</to>
+			<read>e</read>
+		</transition>
+		<note>
+			<text>(b*|b*a(ba)*)(e|aa)</text>
+			<x>795.0</x>
+			<y>39.0</y>
+		</note>
+	</automaton>
+</structure>
