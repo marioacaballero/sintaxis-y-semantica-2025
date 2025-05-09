@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!--Created with JFLAP 7.1.--><structure>
+	<type>fa</type>
+	<automaton>
+		<!--The list of states.-->
+		<state id="6" name="q6">
+			<x>173.0</x>
+			<y>224.0</y>
+			<initial/>
+		</state>
+		<state id="7" name="q7">
+			<x>670.0</x>
+			<y>228.0</y>
+			<final/>
+		</state>
+		<!--The list of transitions.-->
+		<transition>
+			<from>6</from>
+			<to>7</to>
+			<read>(((a|b)a*b|b)|aa*ba)(aa*b|bb*aa)*bb*|aa*</read>
+		</transition>
+	</automaton>
+</structure>
