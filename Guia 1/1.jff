@@ -8,23 +8,23 @@
 			<initial/>
 		</state>
 		<state id="1" name="1">
-			<x>442.0</x>
-			<y>151.0</y>
+			<x>426.0</x>
+			<y>158.0</y>
 		</state>
 		<state id="2" name="3">
 			<x>368.0</x>
 			<y>375.0</y>
 		</state>
 		<state id="3" name="2">
-			<x>637.0</x>
-			<y>200.0</y>
+			<x>573.0</x>
+			<y>181.0</y>
 			<final/>
 		</state>
 		<!--The list of transitions.-->
 		<transition>
-			<from>3</from>
-			<to>2</to>
-			<read>O</read>
+			<from>0</from>
+			<to>1</to>
+			<read>L</read>
 		</transition>
 		<transition>
 			<from>1</from>
@@ -37,14 +37,9 @@
 			<read>D</read>
 		</transition>
 		<transition>
-			<from>3</from>
-			<to>3</to>
-			<read>D</read>
-		</transition>
-		<transition>
-			<from>1</from>
+			<from>0</from>
 			<to>2</to>
-			<read>O</read>
+			<read>D</read>
 		</transition>
 		<transition>
 			<from>1</from>
@@ -57,8 +52,8 @@
 			<read>G</read>
 		</transition>
 		<transition>
-			<from>3</from>
-			<to>3</to>
+			<from>0</from>
+			<to>2</to>
 			<read>G</read>
 		</transition>
 		<transition>
@@ -72,34 +67,9 @@
 			<read>L</read>
 		</transition>
 		<transition>
-			<from>3</from>
-			<to>3</to>
-			<read>L</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>2</to>
-			<read>Oesp</read>
-		</transition>
-		<transition>
 			<from>2</from>
 			<to>2</to>
 			<read>O</read>
-		</transition>
-		<transition>
-			<from>1</from>
-			<to>3</to>
-			<read>Oesp</read>
-		</transition>
-		<transition>
-			<from>2</from>
-			<to>2</to>
-			<read>Oesp</read>
-		</transition>
-		<transition>
-			<from>3</from>
-			<to>3</to>
-			<read>Oesp</read>
 		</transition>
 		<transition>
 			<from>0</from>
@@ -107,19 +77,9 @@
 			<read>O</read>
 		</transition>
 		<transition>
-			<from>0</from>
-			<to>2</to>
-			<read>D</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>1</to>
-			<read>L</read>
-		</transition>
-		<transition>
-			<from>0</from>
-			<to>2</to>
-			<read>G</read>
+			<from>1</from>
+			<to>3</to>
+			<read>O</read>
 		</transition>
 	</automaton>
 </structure>

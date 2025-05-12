@@ -4,8 +4,6 @@ Unit auxiliares;
 Interface
 
 Const 
-  q0 = 0;
-  F = [2];
   Fr = [6,12];
   FinArch = #0;
   maxsim = 200;
@@ -13,13 +11,10 @@ Const
                                     'else', 'while', 'do', 'read', 'write');
 
 Type 
-  Sigma = (Letra, Digito, Guion, Otro, OtroEsp);
   SigmaReal = (Dig, Signo, Punto, Coma, OtraC);
   FileOfChar = file Of Char;
-  Q = 0..3;
   Qr = 0..13;
-  TipoDelta = Array[Q,Sigma] Of Q;
-  TipoDeltaReal = Array[Q,SigmaReal] Of Qr;
+  TipoDeltaReal = Array[Qr,SigmaReal] Of Qr;
 
   TipoSimboloGramatical = (Tid,Tcreal,Tccadena,Tparentesisabre,Tparentisiscierra
                            ,Tmas,Tmenos,TProducto,T_division,Tptoycoma,Tcoma,
@@ -34,40 +29,29 @@ Type
     cant: 0..maxsim;
   End;
 
+  // '(': CarASimb := OtroEsp;
+  // ')': CarASimb := OtroEsp;
+  // ';': CarASimb := OtroEsp;
+  // '.': CarASimb := OtroEsp;
+  // ',': CarASimb := OtroEsp;
+  // '<': CarASimb := OtroEsp;
+  // '>': CarASimb := OtroEsp;
+  // '=': CarASimb := OtroEsp;
+  // '+': CarASimb := OtroEsp;
+  // '-': CarASimb := OtroEsp;
+  // '*': CarASimb := OtroEsp;
+  // '/': CarASimb := OtroEsp;
+  // '"': CarASimb := OtroEsp;
+  // ':': CarASimb := OtroEsp;
+
 Procedure LeerCar(Var Fuente:FileOfChar;Var control:
                   Longint; Var car:char);
-Function CarASimb(Car:Char): Sigma;
 Procedure InstalarEnTS(Lexema: String; Var TS:TablaDeSimbolos; Var CompLex:
                        TipoSimboloGramatical);
 Procedure cargarPalRes(Var TS: TablaDeSimbolos);
 
 
 Implementation
-
-Function CarASimb(Car:Char): Sigma;
-Begin
-  Case Car Of 
-    'a'..'z', 'A'..'Z': CarASimb := Letra;
-    '0'..'9'      : CarASimb := Digito;
-    '_': CarASimb := Guion;
-    '(': CarASimb := OtroEsp;
-    ')': CarASimb := OtroEsp;
-    ';': CarASimb := OtroEsp;
-    '.': CarASimb := OtroEsp;
-    ',': CarASimb := OtroEsp;
-    '<': CarASimb := OtroEsp;
-    '>': CarASimb := OtroEsp;
-    '=': CarASimb := OtroEsp;
-    '+': CarASimb := OtroEsp;
-    '-': CarASimb := OtroEsp;
-    '*': CarASimb := OtroEsp;
-    '/': CarASimb := OtroEsp;
-    '"': CarASimb := OtroEsp;
-    ':': CarASimb := OtroEsp;
-    Else
-      CarASimb := Otro
-  End;
-End;
 
 Function carasimbReal(cha:char): SigmaReal;
 Begin
@@ -120,19 +104,17 @@ Begin
 End;
 
 Procedure buscarenTS(TS: TablaDeSimbolos; lexema: String; Var complex:
-                     TipoSimboloGramatical);
+                     TipoSimboloGramatical; Var encontrado: Boolean);
 
 Var 
   i: byte;
-  flag: Boolean;
 Begin
   i := 1;
-  flag := true;
-  While (i <= ts.cant) And flag Do
+  While (i <= ts.cant) And Not encontrado Do
     Begin
-      If ts.elem[i].Lexema = lexema Then
+      If (ts.elem[i].Lexema = lexema) Then
         Begin
-          flag := false;
+          encontrado := True;
           complex := ts.elem[i].compLex;
         End;
       inc(i);
@@ -141,15 +123,22 @@ End;
 
 Procedure InstalarEnTS(Lexema: String; Var TS:TablaDeSimbolos; Var CompLex:
                        TipoSimboloGramatical);
+
+Var 
+  encontrado: Boolean;
 Begin
-  buscarenTS(TS, lexema, CompLex);
-  If (CompLex <> TparReservada) Then
+  encontrado := False;
+  buscarenTS(TS, lexema, CompLex, encontrado);
+  If (Not encontrado) Then
     Begin
       CompLex := Tid;
       ts.cant := ts.cant + 1;
       ts.elem[ts.cant].compLex := Tid;
       ts.elem[ts.cant].Lexema := Lexema;
-    End;
+      // writeln(CompLex, Lexema)
+    End
+    // Else
+    //   writeln(CompLex, Lexema);
 End;
 
 End.
