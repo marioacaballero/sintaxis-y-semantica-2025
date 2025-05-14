@@ -16,7 +16,8 @@ Type
   Qr = 0..13;
   TipoDeltaReal = Array[Qr,SigmaReal] Of Qr;
 
-  TipoSimboloGramatical = (Tid,Tcreal,Tccadena,Tparentesisabre,Tparentisiscierra
+  TipoSimboloGramatical = (Tid,Tcreal,Tcentera,Tccadena,Tparentesisabre,
+                           Tparentisiscierra
                            ,Tmas,Tmenos,TProducto,T_division,Tptoycoma,Tcoma,
                            Tpunto,Toperadorrealacional,Toperadorasignacion,
                            ErrorGramatical, Pesos, TparReservada);
@@ -29,27 +30,13 @@ Type
     cant: 0..maxsim;
   End;
 
-  // '(': CarASimb := OtroEsp;
-  // ')': CarASimb := OtroEsp;
-  // ';': CarASimb := OtroEsp;
-  // '.': CarASimb := OtroEsp;
-  // ',': CarASimb := OtroEsp;
-  // '<': CarASimb := OtroEsp;
-  // '>': CarASimb := OtroEsp;
-  // '=': CarASimb := OtroEsp;
-  // '+': CarASimb := OtroEsp;
-  // '-': CarASimb := OtroEsp;
-  // '*': CarASimb := OtroEsp;
-  // '/': CarASimb := OtroEsp;
-  // '"': CarASimb := OtroEsp;
-  // ':': CarASimb := OtroEsp;
-
 Procedure LeerCar(Var Fuente:FileOfChar;Var control:
                   Longint; Var car:char);
 Procedure InstalarEnTS(Lexema: String; Var TS:TablaDeSimbolos; Var CompLex:
                        TipoSimboloGramatical);
 Procedure cargarPalRes(Var TS: TablaDeSimbolos);
-
+Procedure SimboloEspecial(Var fuente: FileOfChar; Var control: LongInt; Var
+                          lexema: String; Var complex: TipoSimboloGramatical);
 
 Implementation
 
@@ -135,10 +122,103 @@ Begin
       ts.cant := ts.cant + 1;
       ts.elem[ts.cant].compLex := Tid;
       ts.elem[ts.cant].Lexema := Lexema;
-      // writeln(CompLex, Lexema)
     End
-    // Else
-    //   writeln(CompLex, Lexema);
+End;
+
+Procedure SimboloEspecial(Var fuente: FileOfChar; Var control: LongInt; Var
+                          lexema: String; Var complex: TipoSimboloGramatical);
+
+Var 
+  car: Char;
+  car2: Char;
+  controlAux: LongInt;
+Begin
+  controlAux := control + 1;
+  LeerCar(fuente, control, car);
+  LeerCar(fuente, controlAux, car2);
+  If (car = ':') And (car2 = '=') Then
+    Begin
+      lexema := ':=';
+      complex := Toperadorasignacion;
+      control := control + 2;
+    End
+  Else
+    Begin
+      Case Car Of 
+        '(':
+             Begin
+               lexema := '(';
+               complex := Tparentesisabre;
+               control := control + 1;
+             End;
+        ')':
+             Begin
+               lexema := ')';
+               complex := Tparentisiscierra;
+               control := control + 1;
+             End;
+        ';':
+             Begin
+               lexema := ';';
+               complex := Tptoycoma;
+               control := control + 1;
+             End;
+        '.':
+             Begin
+               lexema := '.';
+               complex := Tpunto;
+               control := control + 1;
+             End;
+        ',':
+             Begin
+               lexema := ',';
+               complex := Tcoma;
+               control := control + 1;
+             End;
+        '<':
+             Begin
+               lexema := '<';
+               complex := Toperadorrealacional;
+               control := control + 1;
+             End;
+        '>':
+             Begin
+               lexema := '>';
+               complex := Toperadorrealacional;
+               control := control + 1;
+             End;
+        '=':
+             Begin
+               lexema := '=';
+               complex := Toperadorrealacional;
+               control := control + 1;
+             End;
+        '+':
+             Begin
+               lexema := '+';
+               complex := Tmas;
+               control := control + 1;
+             End;
+        '-':
+             Begin
+               lexema := '-';
+               complex := Tmenos;
+               control := control + 1;
+             End;
+        '*':
+             Begin
+               lexema := '*';
+               complex := TProducto;
+               control := control + 1;
+             End;
+        '/':
+             Begin
+               lexema := '/';
+               complex := T_division;
+               control := control + 1;
+             End;
+      End;
+    End;
 End;
 
 End.

@@ -20,31 +20,42 @@ Procedure ObtenerSiguienteCompLex(Var Fuente:FileOfChar;Var Control:Longint; Var
 
 Var 
   car: char;
+  controlAux: LongInt;
 Begin
+  Lexema := '';
+  car := #0;
   LeerCar(fuente, control, car);
-  While car <= #32 Do
+  While car In [#1..#32] Do
     Begin
       control := control + 1;
       LeerCar(Fuente, control, car);
     End;
+  controlAux := control;
   If EsIdentificador(Fuente,Control,Lexema) Then
     Begin
-      // WriteLn('contrl ', Control);
       InstalarEnTS(Lexema,TS,CompLex);
+    End
+  Else If EsConstanteCadena(Fuente,Control,Lexema) Then
+         CompLex := Tccadena
+  Else If EsConstanteReal(Fuente,Control,Lexema) Then
+         CompLex := Tcreal
+  Else If EsConstanteEntera(Fuente,Control,Lexema) Then
+         Begin
+           CompLex := Tcentera;
+         End
+  Else If EsSimboloEspecial(Fuente,Control) Then
+         SimboloEspecial(Fuente, control, Lexema, CompLex)
+  Else
+    Begin
+      Lexema := car;
+      CompLex := ErrorGramatical;
     End;
-  // Else If EsConstanteReal(Fuente,Control,Lexema) Then
-  //        CompLex := Tcreal
-  // Else If EsConstanteCadena(Fuente,Control,Lexema) Then
-  //        CompLex := Tccadena
-  // Else If EsConstanteCadena(Fuente,Control,Lexema) Then
-  //        CompLex := Tccadena
-  // Else If Not EsSimboloEspecial(Fuente,Control,Lexema,CompLex) Then
-  //        CompLex := ErrorGramatical
-  // Else
-  //   Begin
-  //     CompLex := ErrorGramatical;
-  //   End;
-  WriteLn(CompLex, Lexema);
+  If controlAux = Control Then
+    Control := control + 1;
+  If car = FinArch Then
+    WriteLn(Pesos, ' $')
+  Else
+    WriteLn(CompLex, ' | ', Lexema);
 End;
 
 End.
