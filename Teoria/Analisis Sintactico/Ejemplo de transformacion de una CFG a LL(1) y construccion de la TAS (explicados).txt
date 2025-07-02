@@ -1,0 +1,224 @@
+Transformación de una CFG a LL(1) y construcción de la TAS
+
+Gramática inicial:
+	A -> AB | CA | &A | D  
+    B -> $A | #A | E
+	C -> A@ | e
+	D -> Da | Db | a | D | E
+	E -> cEc | CE
+
+	1) eliminamos símbolos inútiles
+		A -> AB | CA | &A | D  
+		B -> $A | #A | E
+		C -> A@ | e
+		D -> Da | Db | a | D | E
+		E -> cEc | CE	-- E es inútil ya que tiene dos producciones recursivas y no tiene salida, por lo cual no genera cadenas de terminales
+		
+		Eliminando E:
+		A -> AB | CA | &A | D  
+		B -> $A | #A 
+		C -> A@ | e
+		D -> Da | Db | a | D 
+	
+	2) Eliminamos D->D ya que no aporta nada (sólo agrega ambigüedad)
+	3) Reemplazamos B y C en A, para que las producciones recursivas de A se vean en forma directa
+		A -> A$A | A#A |    A@A | A |      &A | D        -- eliminamos A->A
+		B -> $A | #A     -- al reemplazar B en las producciones de A, B se hace inútil, entonces lo eliminamos 
+		C -> A@ | e      -- al reemplazar C en las producciones de A, C se hace inútil, entonces lo eliminamos 
+		D -> Da | Db | a
+		
+	4) Eliminamos Ambigüedad
+		A -> A$A | A#A | A@A | &A | D      -- A es ambigua ya que es recursiva por izquierda y por derecha
+		D -> Da | Db | a				   -- D no genera ambigüedad	
+		
+		Analizamos las producciones de A 
+		- Cuando usamos la producción A -> A$A, generamos cadenas de la forma A$A$A$A$A$A$A$A...
+		- Cuando usamos A->A#A, generamos A#A#A#A#A#A#A... 
+		- Cuando usamos A->A@A, generamos A@A@A@A... 
+		- Cuando usamos A -> &A, generamos &&&&&A
+
+		Si combinamos todas estas formas, y considerando que las A se deberán reemplazar por D en algún momento, la forma de las cadenas,
+		expresada a través de una expresión regular (ya que la gramática no tiene recursividad embebida, por lo cual genera un lenguaje
+		regular):
+					&*D((#|@|$)&*D)*    es decir, cadenas de 0 o más & seguidos de una D, separadas por #, @ o $
+
+					&&&D $ D @ &D # &&&D @ D 
+					
+		Existen varias formas de eliminar esta ambigüedad, por ejemplo, utilizando asociatividad y/o prioridades, o transformando la ER
+		en CFG (con cierto cuidado)
+		
+		Elijo resolverlo agrupando primero A#A, A@A y A$A mediante factorización izquierda y derecha a la vez, y asociando por derecha:
+		A -> DXA | &A | D 
+		X -> # | @ | $
+		D -> Da | Db | a
+		
+	5) Factorizo A y elimino la recursivdad izquierda de D 
+	    A -> DF | &A
+		F -> XA | e 
+		X -> # | @ | $
+		D -> aG 
+		G -> aG | bG | e 
+		
+		Así nos queda la CFG como LL(1)
+		
+	6) Recorro las producciones, calculo los Primero (y Siguiente cuando Primero contiene epsilon) y genero la TAS
+		A -> DF | &A
+		F -> XA | e 
+		X -> # | @ | $
+		D -> aG 
+		G -> aG | bG | e 
+		
+		Para A -> DF:
+			Primero(DF)=
+			Para calcular Primero(DF) tengo que calcular Primero(D)
+			Primero(D)=
+			Para calcular Primero(D), calculo Primero de las partes derechas de todas las producciones de D 
+			Primero(aG)=
+			Para calcular Primero(aG), calculo Primero(a) que es a, ya que es terminal, entonces:
+			Primero(aG)=Primero(D)=Primero(DF)={a} ya que D no tiene ninguna otra producción.
+			
+			Entonces, TAS[A,a]=DF   (es decir, en la TAS, fila A, columna a, ponemos DF)
+		
+		Para A -> &A
+			Primero(&A)={&}
+			
+			Entonces, TAS[A,&]=&A 
+			
+		Para F -> XA
+			Primero(XA)=
+			Primero(X)=
+			Primero(#)={#}
+			Primero(@)={@}
+			Primero($)={$}
+			Entonces 
+			Primero(X)=Primero(XA)={#,@,$}
+			
+			Por lo tanto:
+				TAS[F,#]=XA
+				TAS[F,@]=XA
+				TAS[F,$]=XA
+
+		Para F -> e 
+			Primero(e)={e}
+			Como contiene epsilon, calculo el Siguiente de la variable que produce:
+			Siguiente(F)=
+			Busco F en las partes Derechas de las producciones, y lo encuentro en A -> DF
+			Como está al final, calculo el Siguiente de la variable que lo produce, Siguiente(A)
+			Busco A en las partes derechas y la encuentro en A -> &A, pero como la variable que produce es la mismo, lo ignoro porque 
+			no agrega nada
+			Como A es el símbolo inicial, por las reglas de cálculo del Siguiente, su Siguiente debe contener el fin de cadena o archivo,
+			que usualmente simbolizamos como $, pero en este caso, para que no se confunda con el terminal $, usaremos !
+			Entonces, Siguiente(A)=Siguiente(F)={!}
+
+			Por lo tanto:
+				TAS[F,!]=e 
+			
+		Para X -> # 
+			Primero(#)={#}
+			
+			Entonces
+				TAS[X,#]=#
+				
+		Para X -> @ 
+			Primero(@)={@}
+			
+			Entonces
+				TAS[X,@]=@
+
+		Para X -> $ 
+			Primero($)={$}
+			
+			Entonces
+				TAS[X,$]=$		
+
+		Para D -> aG
+			Primero(aG)={a}
+			
+			Entonces	
+				TAS[D,a]=aG
+
+		Para G -> aG 
+			Primero(aG)={a}
+			
+			Entonces	
+				TAS[G,a]=aG		
+		
+		Para G -> bG 
+			Primero(bG)={b}
+			
+			Entonces	
+				TAS[G,b]=bG			
+		
+		Para G -> e
+			Primero(e)={e}
+			
+			Como contiene épsilon, calculo Siguiente(G)
+			
+			Siguiente(G):
+			Busco G en las partes derechas de las producciones y lo encuentro en D -> aG, G -> aG y G -> bG
+			En las tres producciones G se encuentra al final, por lo cual hay que calcular el Siguiente de la variable que produce.
+			Tanto en G -> aG como en G -> bG la variable que produce es la misma que la que estamos calculando, por lo cual no 
+			nos agrega nada.
+			Entonces en D -> aG, calculamos Siguiente(D)
+			Siguiente(D):
+			Buscamos D en las partes derechas y la encontramos en A -> DF, como no está al final, calculamos el Primero de lo que sigue a D,
+			es decir, Primero(F)
+			Primero(F)={#, @, $, e} porque es la unión de Primero(XA) con Primero(e), las partes derechas de las producciones de F, que
+			ya las habíamos calculado.
+
+			Entonces en Siguiente(D) agregamos {#, @, $}. Epsilon no es agrega nunca al conjunto Siguiente, pero como Primero(F) contiene
+			epsilon, en la producción A->DF, F se podría anular y D quedaría al final, entonces también hay que calcular el Siguiente(A),
+			porque cuando la variable está al final, se calcula Siguiente de la variable que produce.
+			Entonces calculamos Siguiente(A) también. Siguiente(A) ya está calculado y es {!} (recuerden que en este ejemplo usamos !
+			para indicar el fin de cadena o de archivo, pero en realidad suele ser $)
+			
+			Entonces Siguiente(D)=Siguiente(G)={#, @, $, !}
+			
+			Por lo tanto:
+				TAS[G,#]=e
+				TAS[G,@]=e
+				TAS[G,$]=e
+				TAS[G,!]=e
+				
+			Entonces la TAS queda:
+							a		b		&		# 		@ 		$ 		!	
+					A 		DF 				&A
+					F								XA 		XA		XA		e 
+					X								# 		@ 		$
+					D 		aG 
+					G 		aG 		bG 				e		e 		e 		e 
+
+		    Verificación: Si hacemos una Derivación por Izquierda para una cadena, por ejemplo, para a#&a vemos que:
+
+			Al principio sólo conocemos al primer símbolo de la cadena, es decir a. Y partimos del símbolo inicial. Si nos fijamos en la
+			TAS, TAS[A,a]=DF, lo que significa que A la tenemos que derivar en DF.
+			A =i> DF
+			ahora tenemos las variables D y F. Como la derivación es por Izquierda, primero derivamos D. Nuevamente nos fijamos en la TAS,
+			ahora TAS[D,a]=aG, entonces:
+			A =i> DF =i> aGF 
+			ahora tenemos a al principio de la forma de frase aGF, por lo cual llegamos al símbolo que está en la entrada, por lo cual
+			pasamos al siguiente símbolo de la cadena de entrada, #, y nos fijamos en la TAS en TAS[G,#]=e, entonces:
+			A =i> DF =i> aGF =i> aF 
+			Ahora, TAS[F,#]=XA, por lo cual:
+			A =i> DF =i> aGF =i> aF => aXA
+			luego TAS[X,#]=#, entonces:
+			A =i> DF =i> aGF =i> aF =i> aXA =i> a#A
+			Ahora llegamos a #, por lo cual tomamos el siguiente símbolo en la entrada, &
+			TAS[A,&]=&A 
+			A =i> DF =i> aGF =i> aF =i> aXA =i> a#A =i> a#&A
+			luego TAS[A,a]=DF
+			A =i> DF =i> aGF =i> aF =i> aXA =i> a#A =i> a#&A =i> a#&DF
+			TAS[D,a]=aG 
+			A =i> DF =i> aGF =i> aF =i> aXA =i> a#A =i> a#&A =i> a#&DF =i> a#&aGF
+			Descubrimos el último símbolo a, por lo cual avanzamos al siguiente símbolo, pero como no hay, estamos en Fin de Cadena (o archivo)
+			que en este ejemplo lo representamos por !
+			Entonces tenemos que ver en qué derivar G cuando estamos al final y TAS[G,!]=e, por lo cual
+			A =i> DF =i> aGF =i> aF =i> aXA =i> a#A =i> a#&A =i> a#&DF =i> a#&aGF =i> a#&aF
+			y TAS[F,!]=e, por lo tanto
+			A =i> DF =i> aGF =i> aF =i> aXA =i> a#A =i> a#&A =i> a#&DF =i> a#&aGF =i> a#&aF	=i> a#&a
+
+			Es decir, la TAS nos guía en una derivación por izquierda para llegar a la cadena de entrada automáticamente; la TAS nos dice
+			qué producción utilizar para derivar cada paso.
+			
+			
+			
