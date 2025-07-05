@@ -1,0 +1,47 @@
+    GRAMÁTICAS INDEPENDIENTES DEL CONTEXTO (CFG: CONTEXT FREE GRAMMARS)
+	
+	a) Ejemplo de frases en el lenguaje natural:
+	
+		1. Juan juega.
+		2. El perro ladra.
+		3. La casa es roja.
+	
+	Definimos la sintaxis de las frases mediante una Gramática:
+	
+	P={
+		Frase -> Sujeto Predicado.
+		Sujeto -> Artículo Sustantivo
+		Sujeto -> Sustantivo
+		Predicado -> Verbo
+		Predicado -> Verbo Adjetivo
+		Artículo -> La
+		Artículo -> El
+		Sustantivo -> casa
+		Sustantivo -> perro
+		Sustantivo -> Juan 
+		Verbo -> es
+		Verbo -> ladra
+		Verbo -> juega 	
+		Adjetivo -> roja
+		Adjetivo -> fuerte
+	}
+	
+	V={Adjetivo,Verbo,Sustantivo,Artículo,Predicado,Sujeto,Frase}
+	T={La, El, casa, perro, Juan, es, ladra, juega, fuerte, roja}
+	S=Frase
+
+	
+	Derivación:
+	Frase => Sujeto Predicado. => Artículo Sustantivo Predicado. => El Sustantivo Predicado. =>
+	El perro Predicado. => El perro Verbo Adjetivo. => El perro es Adjetivo. => El perro es fuerte.
+	
+	
+	b) Ejemplo de una CFG para un lenguaje Regular: conjunto de cadenas sobre {a,b}, que terminen en ab.
+	
+		A -> aA | bA | ab 
+	
+	   
+	
+	
+	
+	

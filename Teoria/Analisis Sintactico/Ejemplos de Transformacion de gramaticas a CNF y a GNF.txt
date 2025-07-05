@@ -1,0 +1,186 @@
+
+a) Símbolos Inútiles
+
+					  S -> SaB | aX  | B     	
+					  B -> Ba | bB | C
+					  C -> CC | Xa | Sa					
+					  D -> a | b | Db | Xb   -> D es inútil porque no es alcanzable desde S		
+					  X -> Xa | Xb   		 -> X es inútil porque no genera ninguna cadena de 0 o más terminales
+  
+
+  Simplificando
+  S -> SaB  | B     
+  B -> Ba | bB | C
+  C -> CC  | Sa
+
+  
+  -> X es inútil porque no genera ninguna cadena de 0 o más terminales
+  -> D es inútil porque no es alcanzable desde S
+  
+b) Producciones de la cadena vacía (e-producciones)
+
+  S -> AbA | Ca | aCb  
+  C -> ba | bB | epsilon 
+  A -> Ab | epsilon
+  B -> Bb | Ba | a
+  
+  
+  
+  Transformamos la CFG para que no contenga e-producciones y genere el mismo lenguaje
+  S -> AbA | Ca | aCb | a | ab | b | bA | Ab
+  C -> ba | bB 
+  A -> Ab | b
+  B -> Bb | Ba | a  
+
+
+
+c) Producciones Unitarias
+
+  S -> C | Sa | B | a
+  B -> Ba | Bb | b | C       
+  C -> a | b
+  
+  S -> C | Sa | B | a
+  B -> Ba | Bb | b | a         
+  C -> a | b
+  
+  S -> b | Sa | B | a
+  B -> Ba | Bb | b | a         
+  
+  S -> b | Sa | Ba | Bb | a
+  B -> Ba | Bb | b | a         
+    
+
+  
+  Eliminamos producciones unitarias
+  S -> a | b | Sa | Ba | Bb 
+  B -> Ba | Bb | b | a
+
+  
+d) Factorización por izquierda
+
+  S -> aS | aB | BaX | BaBab           ---  BaX | BaBab las reemplazo por BaW   
+  B -> bBA | bBX | b
+  X -> Xa | b  						   ---- a 		
+  
+  
+  S -> aT | BaW 
+  T -> S | B 
+  W -> X | Bab 
+  B -> bF 
+  F -> BG | epsilon 			-- F -> BA | BX | epsilon 
+  G -> A | X
+  X -> Xa | b 
+  
+  
+  Factorizamos por izquierda
+  S -> aT | BaW
+  W -> X | Bab
+  T -> S | B
+  B -> bBG | b
+  G -> A | X
+  X -> Xa | b  
+  
+  
+  
+  S -> aS | aB | YX | BaBab
+  Y -> Ba | Xaa
+  T -> B | Xa
+  B -> bBA | bBX | b
+  X -> Xa | b  
+  
+
+e) Eliminación de Recursividad Izquierda         
+
+  S -> SaS | C      					-> C aS aS aS
+  C -> Ca | Cb | d | eS   				-> d abbba       eS bbbaaba     (d|eS)(a|b)* 
+ 
+  
+  Eliminación de la RI
+  S -> CT
+  T -> aST | epsilon
+  C -> dW | eSW
+  W -> aW | bW | epsilon
+  
+  
+  Recursividad por Izquierda en más de un paso:
+  A -> Ba | c
+  B -> Abb | b 
+  
+  Reemplazo B para transformarla en recursividad por izquierda directa
+  A -> Abba | ba | c
+  B -> Abb | b 
+  
+  
+  
+  
+  
+f) Formas Normales
+
+  f.1) Forma Normal de Chomsky
+  
+      S -> a | b | Sa | BaB | Bb 
+      B -> Ba | Bb | b | a 
+	 
+	  
+	  Transformación a CNF (A->a, A->BC) (primero eliminar símbolos inútiles, e-producciones y producciones unitarias)
+	  
+	  S -> a | b | SC | BT | BV
+      V -> b	  
+	  T -> CB
+	  C -> a
+      B -> BC | BV | b | a 
+	  
+	  
+	  S -> a | b | SA | BA | BV 
+      B -> BA | BV | b | a
+	  A -> a
+	  V -> b
+	  
+	  S -> XY
+      X -> AB
+	  Y -> WS
+      W -> x	
+      A -> a	  
+	  
+	  
+	  
+
+  f.2) Forma Normal de Greibach (A->aW) (primero eliminar símbolos inútiles, e-producciones, producciones unitarias, eliminar RI)
+      S -> a | b | Sa | Ba | Bb 
+      B -> Ba | Bb | b | a
+	  
+	  Eliminar RI
+	  S -> aT | bT | BaT | BbT
+	  T -> aT | epsilon 	
+      B -> bW | aW
+	  W -> aW | bW | epsilon
+	  
+	  Elimino e-producciones
+	  S -> aT | bT | BaT | BbT | a | b | Ba | Bb
+	  T -> aT | a	
+      B -> bW | aW | b | a
+	  W -> aW | bW | a | b
+	  
+	  S -> aT | bT |  a | b | bWaT | aWaT| baT | aaT   | bWbT | aWbT | bbT | abT | bWa | aWa | ba | aa | bWb  | aWb | bb | ab
+	  T -> aT | a	
+	  W -> aW | bW | a | b
+
+	  
+	  
+	  Transformo a GNF
+	  S -> aT | bT |  a | b | bWAT | aWAT| bAT | aAT   | bWVT | aWVT | bVT | aVT | bWA | aWA | bA | aA | bWV  | aWV | bV | aV
+	  T -> aT | a	
+	  W -> aW | bW | a | b
+	  A -> a
+	  V -> b
+	  
+	  S=> bWAT => bbWAT => bbaAT => bbaaT => bbaaa
+	  
+	  
+	  
+	  
+  
+  
+  
+  
